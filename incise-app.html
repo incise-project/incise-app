@@ -1,0 +1,1731 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>InCiSE 2019: Results dashboard</title>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="robots" content="noindex">
+  <meta name="googlebot" content="noindex">
+
+
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+
+  <link rel="stylesheet" , type="text/css" href="css/flatly.min.css" />
+  <link rel="stylesheet" , type="text/css" href="css/selectize.css" />
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.css"/>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/b-flash-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
+
+  <script type="text/javascript" src="js/selectize.min.js"></script>
+  <script type="text/javascript" src="js/plotly-latest.min.js"></script>
+
+  <style>
+    #bar-container {
+      min-height: 600px !important;
+    }
+
+    #radar-container {
+      min-height: 400px !important;
+    }
+
+    #incise-radar {
+      min-height: 400px !important;
+      min-width: 300px !important;
+    }
+
+    .table-sm {
+      font-size: 0.9em;
+    }
+
+    .table-sm td {
+      vertical-align: middle;
+    }
+
+    .td-center {
+      text-align: center;
+    }
+
+    .card-header .fa {
+    transition: .3s transform ease-in-out;
+    }
+
+    .card-header .collapsed .fa {
+    transform: rotate(180deg);
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <a class="navbar-brand" href="#">InCiSE 2019: Results dashboard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarCollapse" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav" id="incise-tab-nav" role="tablist">
+        <li class="nav-item" id="graph-tab"><a id="graph-tab-link" class="nav-link" data-toggle="tab" href="#graph-panel">Graphs</a></li>
+        <li class="nav-item" id="data-tab" data-container="body" data-toggle="popover" data-trigger="manual" data-placement="bottom" data-content="Select a country to view data"><a id="data-tab-link" class="nav-link disabled" data-toggle="tab" href="#data-panel">Data</a></li>
+        <li class="nav-item" id="ref-tab"><a id="ref-tab-link" class="nav-link" data-toggle="tab" href="#ref-panel">Metadata</a></li>
+        <li class="nav-item" id="about-tab"><a id="about-tab-link" class="nav-link" data-toggle="tab" href="#about-panel">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+
+    <!-- Welcome modal -->
+
+    <div class="modal fade" id="welcome-modal" tabindex="-1" role="dialog" aria-labelledby="welcome-modal-title" aria-hidden="true">
+      <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content ">
+          <div class="modal-header bg-info text-white" style="text-align:center;">
+            <h4 class="modal-title" id="welcome-modal-title">InCiSE 2019 results dashboard</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="welcome-exit">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex justify-content-center">
+            </div>
+            <p>This interactive dashboard allows you to explore the results of the 2019 edition of the International Civil Service Effectiveness (InCiSE) index, including: graphs of the results, a datatable of results, and metadata about the InCiSE metrics.</p>
+            <p>Use the selection controls to choose a country and to switch between the InCiSE index and its constituent indicators.</p>
+            <p>Click "read more" below or visit the about page to learn more aobut the InCiSE project.</p>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal" id="welcome-close">Close</button>
+            <button type="button" class="btn btn-sm btn-info" id="welcome-more-btn">Read more</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro modal -->
+
+    <div class="modal fade bd-modal-lg" id="intro-modal" tabindex="-1" role="dialog" aria-labelledby="into-modal-title" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h4 class="modal-title" id="intro-modal-title">An introduction to InCiSE</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>The International Civil Service Effectiveness index (InCiSE) aims to assess how effectively civil services around the world perform and to identify in which areas their strengths lie relative to their international counterparts.</p>
+            <p>The InCiSE index has been designed on a framework developed in discussion with officials from national governments, international organisations, civil society partners and academics. This framework defines 17 functions and attributes that contribute to civil service effectiveness - at present, due to data availability, only 12 have been included in the index. These functions and attributes, collectively called indicators, are then disaggregated into individual metrics.</p>
+            <hr />
+            <h5>Using this dashboard</h5>
+            <p>This dashboard allows users to interact with the results of the 2019 edition of the InCiSE index with graphs and tables. There are four tabs:</p>
+            <ul>
+              <li>Graphs: to view charts of the InCiSE results.</li>
+              <li>Data: to view tables of the InCiSE results.</li>
+              <li>Metadata: to view metadata about the InCiSE results.</li>
+              <li>About: to learn more about the InCiSE index and project.</li>
+            </ul>
+            <p>Use the controls in the left-hand sidebar to select a country and either the InCiSE index or one of its constituent indicators. There are also controls to turn the help text on or off, and to show this introduction again.</p>
+            <hr />
+            <h5>Graphs</h5>
+            <p>The graphs tab (the default tab) provides charts of the InCiSE results.</p>
+            <ul>
+              <li>The bar graph on the left shows the overall index or indicator scores for all 38 countries.</li>
+              <li>The radar graph on the right shows the results for the constituent components of the score - when the index is selected it will show you the scores for the 12 InCiSE indcators, when an indicator is selected it will show you the scores for the metrics that make up that indicator.</li>
+              <li>The radar chart shows the selected country's scores and the InCiSE average.</li>
+              <li>A radar point with a white fill means that the data for that data for the indicator/metric is missing for that country and has been imputed.</li>
+            </ul>
+            <hr />
+            <h5>Data</h5>
+            <p>The data tab provides a table of the results for the selected country and indicator. At the bottom of the table you can use the buttons to copy this table to the clipboard, download this specific table as a CSV file, or download a CSV file containing all the data from the 2019 edition of InCISE.</p>
+            <hr />
+            <h5>Metadata</h5>
+            <p>This metadata tab provides a table of the refence metadata about the selected indicator. At the bottom of the table you can use the buttons to copy this table to the clipboard, download this specific table as a CSV file, or download a CSV file containing all the metadata from the 2019 edition of InCISE.</p>
+            <hr />
+            <h5>About</h5>
+            <p>The about tab provides some general background about the InCiSE project and its methodology.</p>
+          </div>
+          <div class="modal-footer small bg-light">
+            <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main content -->
+
+    <div class="row">
+
+      <!-- Sidebar -->
+
+      <div class="col-xs-12 col-lg-3 col-xl-2 p-3 border-right border-bottom border-light" id="incise-sidebar">
+        <div class="card border-secondary" id="incise-controls">
+          <div class="card-header bg-light text-body border-0" style="color: #ffffff;">Dashboard controls <button id="controls-button" class="btn btn-sm float-right d-lg-none" data-toggle="collapse" data-target="#collapse-controls" aria-expanded="true" aria-controls="collapse-controls">
+          <span class="fa fa-angle-double-up text-secondary"></span></button></div>
+          <div id="collapse-controls" class="collapse show">
+            <div class="card-body">
+              <div id="incise-selectors">
+                <div id="country-selector">
+                  <!-- <label for="select-country" class="small">Select a country:</label> -->
+                  <select id="select-country">
+                    <option disabled selected value="">Select a country:</option>
+                    <option value="AUS">Australia</option>
+                    <option value="AUT">Austria</option>
+                    <option value="BEL">Belgium</option>
+                    <option value="BGR">Bulgaria</option>
+                    <option value="CAN">Canada</option>
+                    <option value="CHL">Chile</option>
+                    <option value="CZE">Czechia</option>
+                    <option value="DEU">Germany</option>
+                    <option value="DNK">Denmark</option>
+                    <option value="EST">Estonia</option>
+                    <option value="FIN">Finland</option>
+                    <option value="FRA">France</option>
+                    <option value="GRC">Greece</option>
+                    <option value="HRV">Croatia</option>
+                    <option value="HUN">Hungary</option>
+                    <option value="IRL">Ireland</option>
+                    <option value="ISL">Iceland</option>
+                    <option value="ISR">Israel</option>
+                    <option value="ITA">Italy</option>
+                    <option value="JPN">Japan</option>
+                    <option value="LTU">Lithuania</option>
+                    <option value="LVA">Latvia</option>
+                    <option value="MEX">Mexico</option>
+                    <option value="NLD">The Netherlands</option>
+                    <option value="NOR">Norway</option>
+                    <option value="NZL">New Zealand</option>
+                    <option value="POL">Poland</option>
+                    <option value="PRT">Portugal</option>
+                    <option value="ROU">Romania</option>
+                    <option value="SVK">Slovakia</option>
+                    <option value="SVN">Slovenia</option>
+                    <option value="KOR">South Korea</option>
+                    <option value="ESP">Spain</option>
+                    <option value="SWE">Sweden</option>
+                    <option value="CHE">Switzerland</option>
+                    <option value="TUR">Turkey</option>
+                    <option value="GBR">United Kingdom</option>
+                    <option value="USA">United States of America</option>
+                  </select>
+                </div>
+                <div id="indicator-selector">
+                  <!-- <label for="select-indicator">Select an indicator:</label> -->
+                  <select id="select-indicator">
+                    <option value="OVERALL">InCiSE Index</option>
+                    <option value="CAP">Capabilities</option>
+                    <option value="CRM">Crisis and risk management</option>
+                    <option value="DIG">Digital services</option>
+                    <option value="FFM">Fiscal and financial management</option>
+                    <option value="HRM">HR management</option>
+                    <option value="INC">Inclusiveness</option>
+                    <option value="INT">Integrity</option>
+                    <option value="OPN">Openness</option>
+                    <option value="POL">Policy making</option>
+                    <option value="PRO">Procurement</option>
+                    <option value="REG">Regulation</option>
+                    <option value="TAX">Tax administration</option>
+                  </select>
+                </div>
+              </div>
+              <hr />
+              <div class="">
+                <div id="adv-toggle" class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="toggle-adv" data-toggle="collapse" data-target="#adv-controls" aria-expanded="false" aria-controls="adv0">
+                  <label class="custom-control-label col-form-label-sm py-1" for="toggle-adv">Show second country</label>
+                </div>
+                <div id="adv-controls" class="collapse pt-3">
+                  <div id="country2-selection">
+                    <!-- <label for="select-country" class="col-form-label-sm">Comparison country:</label> -->
+                    <select id="select-country2">
+                      <option disabled selected value="">Comparison country:</option>
+                      <option value="AUS">Australia</option>
+                      <option value="AUT">Austria</option>
+                      <option value="BEL">Belgium</option>
+                      <option value="BGR">Bulgaria</option>
+                      <option value="CAN">Canada</option>
+                      <option value="CHL">Chile</option>
+                      <option value="CZE">Czechia</option>
+                      <option value="DEU">Germany</option>
+                      <option value="DNK">Denmark</option>
+                      <option value="EST">Estonia</option>
+                      <option value="FIN">Finland</option>
+                      <option value="FRA">France</option>
+                      <option value="GRC">Greece</option>
+                      <option value="HRV">Croatia</option>
+                      <option value="HUN">Hungary</option>
+                      <option value="IRL">Ireland</option>
+                      <option value="ISL">Iceland</option>
+                      <option value="ISR">Israel</option>
+                      <option value="ITA">Italy</option>
+                      <option value="JPN">Japan</option>
+                      <option value="LTU">Lithuania</option>
+                      <option value="LVA">Latvia</option>
+                      <option value="MEX">Mexico</option>
+                      <option value="NLD">The Netherlands</option>
+                      <option value="NOR">Norway</option>
+                      <option value="NZL">New Zealand</option>
+                      <option value="POL">Poland</option>
+                      <option value="PRT">Portugal</option>
+                      <option value="ROU">Romania</option>
+                      <option value="SVK">Slovakia</option>
+                      <option value="SVN">Slovenia</option>
+                      <option value="KOR">South Korea</option>
+                      <option value="ESP">Spain</option>
+                      <option value="SWE">Sweden</option>
+                      <option value="CHE">Switzerland</option>
+                      <option value="TUR">Turkey</option>
+                      <option value="GBR">United Kingdom</option>
+                      <option value="USA">United States of America</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input form-control-sm" id="toggle-help" checked="true">
+                <label class="custom-control-label col-form-label-sm" for="toggle-help">Show help</label>
+              </div>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="toggle-intro">
+                <label class="custom-control-label col-form-label-sm" for="toggle-intro">Show introduction</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Cotent panels -->
+
+      <div class="col col-xs-12 col-lg-9 col-xl-10 p-3" id="content-panels">
+
+        <div class="tab-content" id="incise-tab-content">
+
+          <div class="tab-pane active" id="graph-panel">
+            <div class="alert alert-dismissible alert-light fade show help" id="graph-alert">
+              <button type="button" class="close" id="graph-close">&times;</button>
+              <strong>Graphs:</strong>
+              <ul>
+                <li>These graphs show the results for the InCiSE index or indicator you have selected.</li>
+                <li>The bar graph on the left shows the overall index or indicator scores for all 38 countries.</li>
+                <li>The radar graph on the right shows the results for the constituent components of the score - when the index is selected it will show you the scores for the 12 InCiSE indcators, when an indicator is selected it will show you the scores for the metrics that make up that indicator.</li>
+                <li>The radar chart shows the selected country's scores and the InCiSE average.</li>
+                <li>A radar point with a white fill means that the data for that data for the indicator/metric is missing for that country and has been imputed.</li>
+              </ul>
+            </div>
+            <div id="graph-container" class="text-center d-none d-md-block d-print-block">
+              <div id="incise-graph"></div>
+            </div>
+            <div id="bar-container" class="embed-responsive d-md-none d-print-none">
+              <div id="incise-bar" class="embed-responsive-item"></div>
+            </div>
+            <div id="radar-container" class="embed-responsive d-md-none d-print-none">
+              <div id="incise-radar" class="embed-responsive-item"></div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade " id="data-panel">
+            <div class="alert alert-dismissible alert-light fade show help" id="data-alert">
+              <button type="button" class="close" id="data-close">&times;</button>
+              <strong class="text-primary">Data table:</strong> This table shows the results for the selected indicator. At the bottom of the table you can use the buttons to copy this table to the clipboard, download this specific table as a CSV
+              file, or download a CSV file containing all the data from the 2019 edition of InCISE.
+            </div>
+            <div class="row">
+              <div class="col-lg-6" id="country1-table">
+                <h5 id="data-title" class="mt-3 strong">Data table</h5>
+                <div class="">
+                  <table id="incise-table" class="table table-striped table-sm"></table>
+                </div>
+              </div>
+              <div class="col-lg-6 border-left border-light" id="country2-table">
+                <h5 id="data-title2" class="mt-3">Data table</h5>
+                <div class="">
+                  <table id="incise-table2" class="table table-striped table-sm"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade " id="ref-panel">
+            <div class="alert alert-dismissible alert-light fade show help" id="metadata-alert">
+              <button type="button" class="close" id="metadata-close">&times;</button>
+              <strong class="text-primary">Metadata:</strong> This table shows the refence metadata about the InCiSE index or the selected indicator. At the bottom of the table you can use the buttons to copy this table to the clipboard, download
+              this specific table as a CSV file, or download a CSV file containing all the metadata from the 2019 edition of InCISE.
+            </div>
+            <h5 id="ref-title" class="mt-3">InCiSE metadata table</h5>
+            <div class="row">
+              <div class="col">
+                <div class="">
+                  <table id="ref-table" class="table table-striped table-sm"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="about-panel">
+            <div class="row">
+              <div class="col-md-4">
+                <h3>About InCiSE</h3>
+                <p>The International Civil Service Effectiveness (InCiSE) Index was launched as a pilot in 2017, this dashboard shows the results from the section edition published in 2019. Recognising the important role civil services can play in helping their countries to prosper, InCiSE aims to assess how effectively civil services around the world perform and to identify in which areas their strengths lie relative to their international counterparts.</p>
+                <p>InCiSE aspires progressively to become a robust, comparative measure of civil service performance, but is not that yet – mainly because of data limitations. In addition, InCiSE does not seek to be definitive: it will be important to assess its results alongside other evidence available to leaders and citizens. The InCiSE Index should be seen as one of a range of tools available to measure civil service effectiveness globally.</p>
+                <p>InCiSE is a collaboration of the <a href="https://www.bsg.ox.ac.uk">Blavatnik School of Government</a> and the <a href="https://www.instituteforgovernment.org.uk/">Institute for Government</a>. It has been supported by the UK Civil Service and has recieved funding from the Open Society Foundations.</p>
+              </div>
+              <div class="col-md-8">
+                <h3>Methodology</h3>
+                <div class="row">
+                  <div class="col-sm">
+                    <p>The InCiSE index brings together data from a wide and varied range of sources. In their raw state these data not directly comparable, some data may be statistics or proportions, some might be ratings on different scales (e.g. 1 to 5 or 0 to 10), and some are categorical data. The InCiSE model processes and normalises the different types of data so that country performance in different domains can be compared. Full details of the methodology can be found in the InCiSE 2019 Technical Report.</p>
+                    <h5>InCiSE framework and model</h5>
+                    <p>The InCiSE index has been designed on a framework developed in discussion with officials from national governments, international organisations, civil society partners and academics. This framework defines 17 functions and attributes that contribute to civil service effectiveness - at present, due to data availability, only 12 have been included in the index. These functions and attributes, collectively called indicators, are then disaggregated into individual metrics.</p>
+                    <h5>Data sources</h5>
+                    <p>InCiSE draws on data from a wide range of data sources, and we are thankful to data providers for allowing the resuse of their data. A full list of data sources can be found below. InCiSE is built using the latest available data as of 30 Novmeber 2018.</p>
+                  </div>
+                  <div class="col-sm">
+                    <h5>Data quality and imputation</h5>
+                    <p>Not all sources cover all 38 countries included in the index, with data availability and quality varying across both countries and indicators. In some cases countries are missing just a few metrics for an indicator, while others are missing all data for a given indicator. In order to provide a practical tool for users, the InCiSE model uses multiple imputation to provide indicative scores for missing data points. These are clearly flagged on the graphs and tables in this dashboard.</p>
+                    <p>The InCiSE model has developed a data quality assessment which assesses the level of missing data for each country and indicator, and also accounts for whether data is from a public sector proxy and the recency of the data. This data quality assessment has been used to determine country coverage.</p>
+                    <h5>Weighting</h5>
+                    <p>The scores for the InCiSE indicators are weighted sums of their constituent metrics. The InCiSE index is then calcualted as a weighted sum of the indcators. The weights for metrics and indicators can be found in the metadata table.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md">
+                <h5>Data Sources</h4>
+                  <small>
+                    <ul class="list-unstyled">
+                      <li class="pt-3">Bertelsmann Stiftung (2018) <a href="http://www.sgi-network.org">Sustainable Governance Indicators 2018</a>, Gütersloh, Germany: Bertelsmann Stiftung</li>
+                      <li class="pt-3">Dahlström C, Teorell J, Dahlberg S, Hartmann F, Lindberg A and Nistotskaya M (2015) <a href="https://qog.pol.gu.se/data/datadownloads/qogexpertsurveydata">The QoG Expert Survey Dataset II</a>, Gothenburg: University of Gothenburg, The Quality of Government Institute</li>
+                      <li class="pt-3">DIGIWHIST (2018) <a href="https://opentender.eu">Opentender</a>, Hungary: Government Transparency Institute</li>
+                      <li class="pt-3">European Commission (2018) <a href="https://ec.europa.eu/digital-single-market/en/news/egovernment-benchmark-2018-digital-efforts-european-countries-are-visibly-paying">eGovernment Benchmark Report 2018</a>, Brussels: European Commission</li>
+                      <li class="pt-3">International Budget Partnership (2018) <a href="http://survey.internationalbudget.org">Open Budget Survey 2017</a>, Washington DC: International Budget Partnership</li>
+                      <li class="pt-3">ILO (2018) <a href="https://www.ilo.org/ilostat/">ILO Statistics</a>, Geneva: International Labour Organization</li>
+                      <li class="pt-3">OECD (2013) <a href="https://doi.org/10.1787/gov_glance-2013-en">Government at a Glance 2013</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2015) <a href="https://doi.org/10.1787/gov_glance-2015-en">Government at a Glance 2015</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2016) <a href="https://qdd.oecd.org/subject.aspx?Subject=GOV_RISK">Dataset on the Governance of Critical Risks</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2016) <a href="https://qdd.oecd.org/subject.aspx?Subject=GOV_PUBPRO_2016">Dataset on Public Procurement</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2017) <a href="https://doi.org/10.1787/gov_glance-2017-en">Government at a Glance 2017</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2017) <a href="https://qdd.oecd.org/subject.aspx?Subject=TAS ">Tax Administration Comparative Information Series</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2018) <a href="https://stats.oecd.org/Index.aspx?QueryId=85336 ">Composite Indicators of Regulatory Policy and Governance</a>, Paris: Organisation for Economic Cooperation and Development</li>
+                      <li class="pt-3">OECD (2012-2018) <a href="http://www.oecd.org/skills/piaac/">Survey of Adult Skills (Programme for International Assessment of Adult Competencies)</a>, Paris: Organisation for Economic Cooperation and Development
+                      </li>
+                      <li class="pt-3">Open Knowledge International (2017) <a href="https://index.okfn.org/">Global Open Data Index</a>, London: Open Knowledge Foundation</li>
+                      <li class="pt-3">Transparency International (2017) <a href="http://gcb.transparency.org/">Global Corruption Barometer</a>, Berlin: Transparency International</li>
+                      <li class="pt-3">UNDESA (2018) <a href="https://publicadministration.un.org/egovkb/en-us/Reports/UN-E-Government-Survey-2018">United Nations E-Government Survey 2018</a>, New York: United Nations</li>
+                      <li class="pt-3">UNESCO Institute for Statistics (2018) <a href="http://data.uis.unesco.org/index.aspx?queryid=168">Population by minimum completed level of education (cumulative)</a>, Montreal: UNESCO Institute for Statistics
+                      </li>
+                      <li class="pt-3">UNIDRR (2016) <a href="https://www.preventionweb.net/applications/hfa/qbnhfa/">Hyogo Framework for Action National Progress Query Tool</a>, New York: United Nations</li>
+                      <li class="pt-3">World Bank (2017) <a href="https://datacatalog.worldbank.org/dataset/fmis-and-open-budget-data-global-dataset">FMIS And Open Budget Data Global Dataset</a>, Washington DC: The World Bank</li>
+                      <li class="pt-3">World Bank (2018) <a href="http://www.doingbusiness.org/">Doing Business 2019</a>, Washington DC: The World Bank</li>
+                      <li class="pt-3">World Economic Forum (2017) <a href="http://reports.weforum.org/global-competitiveness-index-2017-2018/downloads/">Global Competitiveness Index 2017-18 (Executive Opinion Survey)</a>, Geneva: World Economic Forum
+                      </li>
+                      <li class="pt-3">World Justice Project (2018) <a href="https://worldjusticeproject.org/our-work/wjp-rule-law-index/wjp-rule-law-index-2017%E2%80%932018">Rule of Law Index 2017-18</a>, Washington DC: World Justice Project</li>
+                      <li class="pt-3">World Wide Web Foundation (2017) <a href="https://opendatabarometer.org/4thedition/">Open Data Barometer: 4th Edition</a>, Washington DC: World Wide Web Foundation</li>
+                    </ul>
+                  </small>
+
+              </div>
+              <div class="col-md">
+                <h5>Software packages</h4>
+                  <p>The technical model and analysis for the 2019 edition of the InCiSE model was developed using <a href="https://www.R-project.org/">R</a>, a statistical programming language. This dashboard was developed using <a href="https://plot.ly/graphing-libraries/">Plotly.JS</a>, <a href="https://datatables.net/">Datatables</a>, <a href="https://getbootstrap.com/">Bootstrap</a> with the 'Flatly' <a href="https://bootswatch.com/">Bootswatch</a> theme, and <a href="https://jquery.com/">jQuery</a>.</p>
+                  <p>The R packages used in developing InCiSE are:</p>
+                  <small>
+                    <dl class="row">
+                      <dt class="col-lg-3 text-lg-right">R</dt>
+                      <dd class="col-lg-9">R Core Team (2016) R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria, <a href="https://www.R-project.org/">https://www.R-project.org/</a></dd>
+                      <dt class="col-lg-3 text-lg-right">countrycode</dt>
+                      <dd class="col-lg-9">Arel-Bundock V, Enevoldsen N and Yetman CJ (2018) “countrycode: An R package to convert country names and country codes”, Journal of Open Source Software 3(28): 848, <a href="https://doi.org/10.21105/joss.00848">https://doi.org/10.21105/joss.00848</a></dd>
+                      <dt class="col-lg-3 text-lg-right">Rilostat</dt>
+                      <dd class="col-lg-9">Bescond D (2018) Rilostat: ILO Open Data via Ilostat Bulk Download Facility or SDMX Web Service, R package version 0.2.1, <a href="https://CRAN.R-project.org/package=Rilostat">https://CRAN.R-project.org/package=Rilostat</a></dd>
+                      <dt class="col-lg-3 text-lg-right">intsuvy</dt>
+                      <dd class="col-lg-9">Caro DH and Biecek P (2017) “intsvy: An R Package for Analyzing International Large-Scale, Assessment Data” Journal of Statistical Software 81(7): 1-44, <a href="http://doi.org/10.18637/jss.v081.i07">http://doi.org/10.18637/jss.v081.i07</a></dd>
+                      <dt class="col-lg-3 text-lg-right">janitor</dt>
+                      <dd class="col-lg-9">Firke S (2018) janitor: Simple Tools for Examining and Cleaning Dirty Data, R package version 1.1.1, <a href="https://CRAN.R-project.org/package=janitor">https://CRAN.R-project.org/package=janitor</a></dd>
+                      <dt class="col-lg-3 text-lg-right">purrr</dt>
+                      <dd class="col-lg-9">Henry L and Wickham H (2017) purrr: Functional Programming Tools, R package version 0.2.4, <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></dd>
+                      <dt class="col-lg-3 text-lg-right">magrittr</dt>
+                      <dd class="col-lg-9">Milton Bache S and Wickham H (2014) magrittr: A Forward-Pipe Operator for R, R package version 1.5, <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a></dd>
+                      <dt class="col-lg-3 text-lg-right">tibble</dt>
+                      <dd class="col-lg-9">Müller K and Wickham H (2017) tibble: Simple Data Frames, R package version 1.3.4, <a href="https://CRAN.R-project.org/package=tibble">https://CRAN.R-project.org/package=tibble</a></dd>
+                      <dt class="col-lg-3 text-lg-right">mice</dt>
+                      <dd class="col-lg-9">van Buuren S and Groothuis-Oudshoorn K (2011) ‘mice: Multivariate Imputation by Chained Equations in R’, Journal of Statistical Software 45(3):1-67, <a href="http://www.jstatsoft.org/v45/i03/">http://www.jstatsoft.org/v45/i03/</a></dd>
+                      <dt class="col-lg-3 text-lg-right">Plotly</dt>
+                      <dd class="col-lg-9">Sivert C (2018) plotly for R, <a href="https://plotly-book.cpsievert.me">https://plotly-book.cpsievert.me</a></dd>
+                      <dt class="col-lg-3 text-lg-right">rvest</dt>
+                      <dd class="col-lg-9">Wickham H (2016) rvest: Easily Harvest (Scrape) Web Pages, R package version 0.3.2, <a href="https://CRAN.R-project.org/package=rvest">https://CRAN.R-project.org/package=rvest</a></dd>
+                      <dt class="col-lg-3 text-lg-right">scales</dt>
+                      <dd class="col-lg-9">Wickham H (2017) scales: Scale Functions for Visualization, R package version 0.5.0, <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a></dd>
+                      <dt class="col-lg-3 text-lg-right">stringr</dt>
+                      <dd class="col-lg-9">Wickham H (2017) stringr: Simple, Consistent Wrappers for Common String Operations, R package version 1.2.0, <a href="https://CRAN.R-project.org/package=stringr">https://CRAN.R-project.org/package=stringr</a>
+                      </dd>
+                      <dt class="col-lg-3 text-lg-right">readxl</dt>
+                      <dd class="col-lg-9">Wickham H and Bryan J (2017) readxl: Read Excel Files, R package version 1.0.0, <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a></dd>
+                      <dt class="col-lg-3 text-lg-right">dplyr</dt>
+                      <dd class="col-lg-9">Wickham H, Francois R, Henry L and Müller K (2017) dplyr: A Grammar of Data Manipulation, R package version 0.7.4, <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>
+                      </dd>
+                      <dt class="col-lg-3 text-lg-right">tidyr</dt>
+                      <dd class="col-lg-9">Wickham H and Henry L (2017) tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions, R package version 0.7.2, <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a></dd>
+                      <dt class="col-lg-3 text-lg-right">readr</dt>
+                      <dd class="col-lg-9">Wickham H, Hester J and Francois R (2017) readr: Read Rectangular Text Data, R package version 1.1.1, <a href="https://CRAN.R-project.org/package=readr">https://CRAN.R-project.org/package=readr</a></dd>
+                      <dt class="col-lg-3 text-lg-right">haven</dt>
+                      <dd class="col-lg-9">Wickham H and Miller E (2017) haven: Import and Export 'SPSS', 'Stata' and 'SAS' Files, R package version 1.1.0, <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>
+                      </dd>
+                    </dl>
+                  </small>
+              </div>
+              <div class="col-md order-first">
+                <h5>Country codes</h4>
+                  <small>
+                    <dl class="row">
+                      <dt class="col-sm-3 text-md-right">AUS</dt>
+                      <dd class="col-sm-9">Australia</dd>
+                      <dt class="col-sm-3 text-md-right">AUT</dt>
+                      <dd class="col-sm-9">Austria</dd>
+                      <dt class="col-sm-3 text-md-right">BEL</dt>
+                      <dd class="col-sm-9">Belgium</dd>
+                      <dt class="col-sm-3 text-md-right">BGR</dt>
+                      <dd class="col-sm-9">Bulgaria</dd>
+                      <dt class="col-sm-3 text-md-right">CAN</dt>
+                      <dd class="col-sm-9">Canada</dd>
+                      <dt class="col-sm-3 text-md-right">CHE</dt>
+                      <dd class="col-sm-9">Switzerland</dd>
+                      <dt class="col-sm-3 text-md-right">CHL</dt>
+                      <dd class="col-sm-9">Chile</dd>
+                      <dt class="col-sm-3 text-md-right">CZE</dt>
+                      <dd class="col-sm-9">Czechia</dd>
+                      <dt class="col-sm-3 text-md-right">DEU</dt>
+                      <dd class="col-sm-9">Germany</dd>
+                      <dt class="col-sm-3 text-md-right">DNK</dt>
+                      <dd class="col-sm-9">Denmark</dd>
+                      <dt class="col-sm-3 text-md-right">ESP</dt>
+                      <dd class="col-sm-9">Spain</dd>
+                      <dt class="col-sm-3 text-md-right">EST</dt>
+                      <dd class="col-sm-9">Estonia</dd>
+                      <dt class="col-sm-3 text-md-right">FIN</dt>
+                      <dd class="col-sm-9">Finland</dd>
+                      <dt class="col-sm-3 text-md-right">FRA</dt>
+                      <dd class="col-sm-9">France</dd>
+                      <dt class="col-sm-3 text-md-right">GBR</dt>
+                      <dd class="col-sm-9">United Kingdom</dd>
+                      <dt class="col-sm-3 text-md-right">GRC</dt>
+                      <dd class="col-sm-9">Greece</dd>
+                      <dt class="col-sm-3 text-md-right">HRV</dt>
+                      <dd class="col-sm-9">Croatia</dd>
+                      <dt class="col-sm-3 text-md-right">HUN</dt>
+                      <dd class="col-sm-9">Hungary</dd>
+                      <dt class="col-sm-3 text-md-right">IRL</dt>
+                      <dd class="col-sm-9">Ireland</dd>
+                      <dt class="col-sm-3 text-md-right">ISL</dt>
+                      <dd class="col-sm-9">Iceland</dd>
+                      <dt class="col-sm-3 text-md-right">ISR</dt>
+                      <dd class="col-sm-9">Israel</dd>
+                      <dt class="col-sm-3 text-md-right">ITA</dt>
+                      <dd class="col-sm-9">Italy</dd>
+                      <dt class="col-sm-3 text-md-right">JPN</dt>
+                      <dd class="col-sm-9">Japan</dd>
+                      <dt class="col-sm-3 text-md-right">KOR</dt>
+                      <dd class="col-sm-9">South Korea</dd>
+                      <dt class="col-sm-3 text-md-right">LTU</dt>
+                      <dd class="col-sm-9">Lithuania</dd>
+                      <dt class="col-sm-3 text-md-right">LVA</dt>
+                      <dd class="col-sm-9">Latvia</dd>
+                      <dt class="col-sm-3 text-md-right">MEX</dt>
+                      <dd class="col-sm-9">Mexico</dd>
+                      <dt class="col-sm-3 text-md-right">NLD</dt>
+                      <dd class="col-sm-9">The Netherlands</dd>
+                      <dt class="col-sm-3 text-md-right">NOR</dt>
+                      <dd class="col-sm-9">Norway</dd>
+                      <dt class="col-sm-3 text-md-right">NZL</dt>
+                      <dd class="col-sm-9">New Zealand</dd>
+                      <dt class="col-sm-3 text-md-right">POL</dt>
+                      <dd class="col-sm-9">Poland</dd>
+                      <dt class="col-sm-3 text-md-right">PRT</dt>
+                      <dd class="col-sm-9">Portugal</dd>
+                      <dt class="col-sm-3 text-md-right">ROU</dt>
+                      <dd class="col-sm-9">Romania</dd>
+                      <dt class="col-sm-3 text-md-right">SVK</dt>
+                      <dd class="col-sm-9">Slovakia</dd>
+                      <dt class="col-sm-3 text-md-right">SVN</dt>
+                      <dd class="col-sm-9">Slovenia</dd>
+                      <dt class="col-sm-3 text-md-right">SWE</dt>
+                      <dd class="col-sm-9">Sweden</dd>
+                      <dt class="col-sm-3 text-md-right">TUR</dt>
+                      <dd class="col-sm-9">Turkey</dd>
+                      <dt class="col-sm-3 text-md-right">USA</dt>
+                      <dd class="col-sm-9">United States of America</dd>
+                    </dl>
+                  </small>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <script>
+    var selectCtry = $('#select-country').selectize({
+      allowEmptyOption: true,
+      onChange: function(value) {
+        chk_ctry2(), plot_graphs(), filter_table();
+      }
+    });
+
+    var selectInd = $('#select-indicator').selectize({
+      onChange: function(value) {
+        plot_graphs(), filter_table();
+      }
+    });
+
+    var selectCtry2 = $('#select-country2').selectize({
+      allowEmptyOption: true,
+      onChange: function(value) {
+        chk_ctry2(), plot_graphs(), filter_table();
+      }
+    });
+
+    var selectizeCountry = selectCtry[0].selectize;
+    var selectizeIndicator = selectInd[0].selectize;
+    var selectizeCountry2 = selectCtry2[0].selectize;
+
+    function plot_graphs() {
+
+      var country_colour = "#0082c2"
+      var second_colour = "#d70926"
+      var incise_colour = "#666666"
+
+      var graph_font = $("body").css("font-family")
+
+      var two_countries = false
+
+      if (selectizeCountry2.getValue() != "") {
+        two_countries = true
+      }
+
+      Plotly.d3.json("data/incise2019-graph.JSON", function(err, rows) {
+        function unpack(rows, key) {
+          return rows.map(function(row) {
+            return row[key];
+          });
+        }
+
+        var sub_width = null
+        var sub_height = null
+
+        if ($(document).width() < 1100) {
+          sub_width = 700;
+          sub_height = 700;
+        } else if ($(document).width() < 1200) {
+          sub_width = 800;
+          sub_height = 700;
+        } else {
+          sub_width = 850;
+          sub_height = 700;
+        }
+
+        var base_bar = {
+          name: "All countries",
+          y: unpack(rows, 'cc_iso3c'),
+          x: unpack(rows, 'value'),
+          mode: 'markers',
+          type: 'bar',
+          orientation: 'h',
+          marker: {
+            color: '#cccccc'
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'score'),
+            operation: '==',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'sort',
+            target: 'x',
+            order: 'ascending'
+          }],
+          hoverinfo: 'x',
+          hoverlabel: {
+            bgcolor: '#333333',
+            bordercolor: '#ffffff',
+          }
+        }
+
+        var bar_incise = {
+          name: "InCiSE average",
+          y: unpack(rows, 'cc_iso3c'),
+          x: unpack(rows, 'value'),
+          mode: 'markers',
+          type: 'bar',
+          orientation: 'h',
+          marker: {
+            color: incise_colour
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'score'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: "InCiSE"
+          }, {
+            type: 'sort',
+            target: 'x',
+            order: 'ascending'
+          }],
+          hoverinfo: 'skip',
+          showlegend: false
+        }
+
+        var bar_country = {
+          name: selectizeCountry.getItem(selectizeCountry.getValue()).text(),
+          y: unpack(rows, 'cc_iso3c'),
+          x: unpack(rows, 'value'),
+          mode: 'markers+text',
+          text: 'x',
+          textposition: 'right',
+          type: 'bar',
+          orientation: 'h',
+          marker: {
+            color: country_colour
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'score'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry.getValue()
+          }, {
+            type: 'sort',
+            target: 'x',
+            order: 'ascending'
+          }],
+          hoverinfo: 'skip',
+          showlegend: false
+        }
+
+        var bar_country2 = {
+          name: selectizeCountry2.getItem(selectizeCountry2.getValue()).text(),
+          y: unpack(rows, 'cc_iso3c'),
+          x: unpack(rows, 'value'),
+          mode: 'markers+text',
+          text: 'x',
+          textposition: 'right',
+          type: 'bar',
+          orientation: 'h',
+          marker: {
+            color: second_colour
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'score'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry2.getValue()
+          }, {
+            type: 'sort',
+            target: 'x',
+            order: 'ascending'
+          }],
+          hoverinfo: 'skip',
+          showlegend: false
+        }
+
+
+        var radar_incise = {
+          name: 'InCiSE average',
+          type: 'scatterpolar',
+          mode: 'lines+markers',
+          hoverinfo: "name+r",
+          theta: unpack(rows, 'graph_label'),
+          r: unpack(rows, 'value'),
+          marker: {
+            line: {
+              width: 2,
+              color: incise_colour
+            },
+            size: 4,
+            color: incise_colour,
+            symbol: 'circle'
+          },
+          line: {
+            dash: 'longdash'
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: "InCiSE"
+          }],
+          showlegend: true
+        }
+
+        var radar_country = {
+          name: selectizeCountry.getItem(selectizeCountry.getValue()).text(),
+          type: 'scatterpolar',
+          mode: 'lines+markers',
+          theta: unpack(rows, 'graph_label'),
+          r: unpack(rows, 'value'),
+          hoverinfo: "name+r",
+          marker: {
+            line: {
+              width: 2,
+              color: country_colour
+            },
+            size: 8,
+            color: country_colour
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry.getValue()
+          }],
+          showlegend: true
+        }
+
+        var radar_impute = {
+          name: 'Imputed results',
+          type: 'scatterpolar',
+          mode: 'markers',
+          hoverinfo: 'text',
+          text: "Imputed score",
+          theta: unpack(rows, 'graph_label'),
+          r: unpack(rows, 'impute'),
+          marker: {
+            symbol: 0,
+            line: {
+              color: country_colour,
+              width: 2
+            },
+            size: 8,
+            color: '#ffffff'
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry.getValue()
+          }],
+          showlegend: false
+        }
+
+        var radar_country2 = {
+          name: selectizeCountry2.getItem(selectizeCountry2.getValue()).text(),
+          type: 'scatterpolar',
+          mode: 'lines+markers',
+          theta: unpack(rows, 'graph_label'),
+          r: unpack(rows, 'value'),
+          hoverinfo: "name+r",
+          marker: {
+            line: {
+              width: 2,
+              color: second_colour
+            },
+            size: 6,
+            color: second_colour,
+            symbol: 'square'
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry2.getValue()
+          }],
+          showlegend: true
+        }
+
+        var radar_impute2 = {
+          name: 'Imputed results',
+          type: 'scatterpolar',
+          mode: 'markers',
+          hoverinfo: 'text',
+          text: "Imputed score",
+          theta: unpack(rows, 'graph_label'),
+          r: unpack(rows, 'impute'),
+          marker: {
+            symbol: 'square',
+            line: {
+              color: second_colour,
+              width: 2
+            },
+            size: 6,
+            color: '#ffffff'
+          },
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }, {
+            type: 'filter',
+            target: unpack(rows, 'cc_iso3c'),
+            operation: '=',
+            value: selectizeCountry2.getValue()
+          }],
+          showlegend: false
+        }
+
+
+        var radar_impute3 = {
+          name: 'Imputed results',
+          type: 'scatterpolar',
+          mode: 'markers',
+          hoverinfo: 'none',
+          theta: unpack(rows, 'graph_label'),
+          r: [0],
+          transforms: [{
+            type: 'filter',
+            target: unpack(rows, 'indicator'),
+            operation: '=',
+            value: selectizeIndicator.getValue()
+          }],
+          marker: {
+            symbol: 0,
+            line: {
+              color: incise_colour,
+              width: 2
+            },
+            size: 8,
+            color: '#ffffff'
+          },
+          showlegend: true
+        }
+
+        var bar_layout = {
+          font: {
+            family: graph_font,
+            size: 10
+          },
+          title: {
+            text: selectizeIndicator.getItem(selectizeIndicator.getValue()).text() + ": overall score",
+            x: 0,
+            xanchor: 'left',
+            font: {
+              size: 14
+            }
+          },
+          barmode: 'overlay',
+          autosize: true,
+          xaxis: {
+            visible: true,
+            range: [0, 1],
+            tickmode: 'array',
+            tickvals: [0, 0.25, 0.5, 0.75, 1],
+            showgrid: true,
+            title: '',
+            zeroline: true,
+            fixedrange: true
+          },
+          yaxis: {
+            fixedrange: true,
+            type: 'category',
+            showticklabels: true,
+            tickmode: 'linear'
+          },
+          showlegend: false,
+          legend: {
+            "orientation": 'h'
+          }
+        }
+
+        var radar_layout = {
+          title: {
+            text: selectizeIndicator.getItem(selectizeIndicator.getValue()).text() + ": component scores",
+            x: 0,
+            xanchor: 'left',
+            font: {
+              size: 14
+            }
+          },
+          polar: {
+            radialaxis: {
+              range: [0, 1.1],
+              visible: true,
+              tick0: 0,
+              dtick: 0.25,
+              ticks: "",
+              showline: false,
+              showticklabels: false,
+              fixedrange: true
+            },
+            angularaxis: {
+              direction: 'clockwise',
+              rotation: 75,
+              showline: false,
+              fixedrange: true,
+              ticks: ""
+            },
+            gridshape: 'linear'
+          },
+          showlegend: true,
+          legend : {
+            "orientation": 'h'
+          },
+          autosize: true,
+          font: {
+            family: graph_font,
+            size: 10
+          },
+          dragmode: false
+        }
+
+
+
+        if (selectizeCountry.getValue() == "") {
+          var titleText = selectizeIndicator.getItem(selectizeIndicator.getValue()).text()
+        } else {
+          if (two_countries == true) {
+            var titleText = selectizeIndicator.getItem(selectizeIndicator.getValue()).text() + ": " + selectizeCountry.getItem(selectizeCountry.getValue()).text() + " and " + selectizeCountry2.getItem(selectizeCountry2.getValue()).text()
+          } else {
+            var titleText = selectizeIndicator.getItem(selectizeIndicator.getValue()).text() + ": " + selectizeCountry.getItem(selectizeCountry.getValue()).text()
+          }
+        }
+
+        var sub_layout = {
+          font: {
+            family: graph_font
+          },
+          title: {
+            text: titleText,
+            x: 0.05,
+            xanchor: 'left'
+          },
+          annotations: [{
+            "text": 'Source: International Civil Service Effectiveness Index (InCiSE) Index 2019',
+            xref: "paper",
+            x: 1.02,
+            yref: "paper",
+            y: -0.1,
+            showarrow: false,
+            xshift: 0,
+            yshift: 0
+          }],
+          barmode: 'overlay',
+          autosize: 'true',
+          xaxis: {
+            visible: true,
+            range: [0, 1],
+            tickmode: 'array',
+            tickvals: [0, 0.25, 0.5, 0.75, 1],
+            showgrid: true,
+            title: '',
+            hoverformat: '.2f',
+            zeroline: true,
+            fixedrange: true,
+            domain: [0, 0.3]
+          },
+          yaxis: {
+            title: '',
+            fixedrange: true,
+            type: 'category',
+            showticklabels: true,
+            tickmode: 'linear',
+            tickfont: {
+              size: 12
+            },
+            domain: [0, 1],
+            automargin: true
+          },
+          polar: {
+            radialaxis: {
+              range: [0, 1.1],
+              visible: true,
+              tick0: 0,
+              dtick: 0.25,
+              ticks: "",
+              hoverformat: '.2f',
+              showline: false,
+              showticklabels: false,
+              fixedrange: true
+            },
+            angularaxis: {
+              direction: 'clockwise',
+              rotation: 75,
+              showline: false,
+              fixedrange: true,
+              ticks: ""
+            },
+            gridshape: 'linear',
+            domain: {
+              x: [0.35, 1],
+              y: [0.1, 0.9]
+            },
+            bgcolor: 'rgba(255,255,255,0)'
+          },
+          showlegend: true,
+          legend: {
+            "orientation": 'h',
+            y: 1.08,
+            x: 0
+          },
+          hovermode: 'closest',
+          paper_bgcolor: '#fff',
+          plot_bgcolor: '#fff',
+          width: sub_width,
+          height: sub_height,
+          dragmode: false
+        }
+
+        var sub_data = null
+        var bar_data = null
+        var radar_data = null
+
+        if (two_countries) {
+          var sub_data = [base_bar, bar_incise, bar_country, bar_country2, radar_incise, radar_country, radar_country2, radar_impute, radar_impute2, radar_impute3]
+
+          var bar_data = [base_bar, bar_incise, bar_country, bar_country2]
+
+          var radar_data = [radar_incise, radar_country, radar_country2, radar_impute, radar_impute2, radar_impute3]
+
+        } else {
+          var sub_data = [base_bar, bar_incise, bar_country, radar_incise, radar_country, radar_impute, radar_impute3]
+
+          var bar_data = [base_bar, bar_incise, bar_country]
+
+          var radar_data = [radar_incise, radar_country, radar_impute, radar_impute3]
+        }
+
+        var plot_config = {
+          displayModeBar: true,
+          displaylogo: false,
+          modeBarButtonsToRemove: ['select2d', 'zoom2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toggleSpikelines', 'resetViews']
+        };
+
+        var sml_config = {
+          displayModeBar: false,
+          displaylogo: false
+        };
+
+        Plotly.newPlot('incise-graph', sub_data, sub_layout, plot_config)
+        Plotly.newPlot('incise-bar', bar_data, bar_layout, sml_config)
+        Plotly.newPlot('incise-radar', radar_data, radar_layout, sml_config)
+
+      });
+
+
+    };
+
+    var dat_tab = $("#incise-table").DataTable({
+      "ajax": {
+        "url": 'data/incise2019-table.JSON',
+        "dataSrc": '',
+      },
+      "columns": [{
+          "data": 'cc_iso3c',
+          "title": "Country",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'indicator',
+          "title": "Indicator",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'score',
+          "title": "Indicator",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'label',
+          "title": "Item",
+          "orderable": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'value',
+          "title": "Score",
+          "defaultContent": "",
+          'className': "td-center"
+        },
+        {
+          "data": 'incise',
+          "title": "InCiSE \naverage",
+          "orderable": false,
+          "defaultContent": "",
+          'className': "td-center"
+        },
+        {
+          "data": 'rank',
+          "title": "Rank",
+          "defaultContent": ""
+        },
+        {
+          "data": 'status',
+          "title": "Status",
+          "orderable": false,
+          "defaultContent": ""
+        }
+
+      ],
+      "buttons": [{
+          "extend": 'copy',
+          "text": 'Copy',
+          "title": 'InCiSE 2019: Custom selection',
+          "messageBottom": 'Copy this table to the clipboard',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV',
+          "messageBottom": 'Download this table as a CSV file',
+          "filename": 'incise2019_custom',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV: All',
+          "messageBottom": 'Download the whole data as a CSV file',
+          "filename": 'incise2019_full',
+          "exportOptions": {
+            "modifier": {
+              "search": 'none'
+            }
+          },
+          customize: function(csv) {
+            var split_csv = csv.split("\n");
+            split_csv[0] = '"Country","Indicator","Item","Label","Score","InCiSE Average","Rank","Status"';
+            csv = split_csv.join("\n");
+            return (csv)
+          }
+        }
+      ],
+      "paging": false,
+      "ordering": false,
+      "dom": 'tB',
+      'fixedColumns': true,
+      'scrollX': true,
+      'scrollY': 375,
+      'scrollCollapse': true,
+      'api': true
+    });
+
+    var dat_tab2 = $("#incise-table2").DataTable({
+      "ajax": {
+        "url": 'data/incise2019-table.JSON',
+        "dataSrc": '',
+      },
+      "columns": [{
+          "data": 'cc_iso3c',
+          "title": "Country",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'indicator',
+          "title": "Indicator",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'score',
+          "title": "Indicator",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'label',
+          "title": "Item",
+          "orderable": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'value',
+          "title": "Score",
+          "defaultContent": "",
+          'className': "td-center"
+        },
+        {
+          "data": 'incise',
+          "title": "InCiSE \naverage",
+          "orderable": false,
+          "defaultContent": "",
+          'className': "td-center"
+        },
+        {
+          "data": 'rank',
+          "title": "Rank",
+          "defaultContent": ""
+        },
+        {
+          "data": 'status',
+          "title": "Status",
+          "orderable": false,
+          "defaultContent": ""
+        }
+
+      ],
+      "buttons": [{
+          "extend": 'copy',
+          "text": 'Copy',
+          "title": 'InCiSE 2019: Custom selection',
+          "messageBottom": 'Copy this table to the clipboard',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV',
+          "messageBottom": 'Download this table as a CSV file',
+          "filename": 'incise2019_custom',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV: All',
+          "messageBottom": 'Download the whole data as a CSV file',
+          "filename": 'incise2019_full',
+          "exportOptions": {
+            "modifier": {
+              "search": 'none'
+            }
+          },
+          customize: function(csv) {
+            var split_csv = csv.split("\n");
+            split_csv[0] = '"Country","Indicator","Item","Label","Score","InCiSE Average","Rank","Status"';
+            csv = split_csv.join("\n");
+            return (csv)
+          }
+        }
+      ],
+      "paging": false,
+      "ordering": false,
+      "dom": 'tB',
+      'fixedColumns': {
+        'leftColumns' : 1
+      },
+      'scrollX': true,
+      'scrollY': 375,
+      'scrollCollapse': true,
+      'api': true
+    });
+
+    var ref_tab = $("#ref-table").DataTable({
+      "ajax": {
+        "url": 'data/incise2019-reference.JSON',
+        "dataSrc": ''
+      },
+      "columns": [{
+          "data": 'indicator',
+          "title": "Indicator",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'item',
+          "title": "Item",
+          "visible": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'label',
+          "title": "Label",
+          "defaultContent": "",
+          "orderable": false,
+        },
+        {
+          "data": 'description',
+          "title": "Description",
+          "orderable": false,
+          "defaultContent": ""
+        },
+        {
+          "data": 'year',
+          "title": "Reference year",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'source',
+          "title": "Data source",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'type',
+          "title": "Data type",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'proxy',
+          "title": "Public sector proxy",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'transformation',
+          "title": "Data transformation",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'wt_total',
+          "title": "Total weight",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        },
+        {
+          "data": 'datapoints',
+          "title": "# of datapoints",
+          "orderable": false,
+          "defaultContent": "",
+          'className': 'td-center'
+        }
+
+      ],
+      "buttons": [{
+          "extend": 'copy',
+          "text": 'Copy',
+          "title": 'InCiSE 2019 reference: Custom selection',
+          "messageBottom": 'Copy this table to the clipboard',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV',
+          "messageBottom": 'Download this table as a CSV file',
+          "filename": 'incise2019_customreference',
+          "exportOptions": {
+            "columns": ':visible'
+          }
+        },
+        {
+          "extend": 'csv',
+          "text": 'CSV: All',
+          "messageBottom": 'Download the whole data as a CSV file',
+          "filename": 'incise2019_fullreference',
+          "exportOptions": {
+            "modifier": {
+              "search": 'none'
+            }
+          },
+          customize: function(csv) {
+            var split_csv = csv.split("\n");
+            split_csv[0] = '"Indicator","Item","Label","Description","Year","Source","Proxy","Type","Weight","Datapoints"';
+            csv = split_csv.join("\n");
+            return (csv)
+          }
+        }
+      ],
+      "paging": false,
+      "ordering": false,
+      "dom": 'tB',
+      'fixedColumns': {
+        'leftColumns' : 1
+      },
+      'scrollX': true,
+      'scrollY': 375,
+      'scrollCollapse': true,
+      'api': true
+    });
+
+    function filter_table() {
+
+      var selectedCountryVal = selectizeCountry.getValue();
+      var selectedIndicatorVal = selectizeIndicator.getValue();
+      var selectedCountryVal2 = selectizeCountry2.getValue();
+
+      var selectedCountryTxt = selectizeCountry.getItem(selectedCountryVal).text();
+      var selectedIndicatorTxt = selectizeIndicator.getItem(selectedIndicatorVal).text();
+
+      var selectedCountryTxt2 = selectizeCountry2.getItem(selectedCountryVal2).text();
+
+      dat_tab.columns(0).search(selectedCountryVal).draw();
+      dat_tab.columns(1).search(selectedIndicatorVal).draw();
+
+      ref_tab.columns(0).search(selectedIndicatorVal).draw();
+
+      dat_tab2.columns(0).search(selectedCountryVal2).draw();
+      dat_tab2.columns(1).search(selectedIndicatorVal).draw();
+
+      if (selectedCountryVal == "") {
+        $("#data-tab-link").addClass("disabled")
+      } else {
+        $("#data-tab-link").removeClass("disabled")
+      }
+
+      if (selectedIndicatorVal == "OVERALL") {
+        var itemHeading = "Indicators";
+      } else {
+        var itemHeading = selectedIndicatorTxt + "\nmetrics"
+      }
+
+      if (selectizeCountry2.getValue() == "") {
+        $("#country2-table").fadeOut()
+      } else {
+        $("#country2-table").fadeIn()
+      }
+
+
+      dat_tab.columns(3).header().to$().text(itemHeading);
+      dat_tab.columns(4).header().to$().text(selectedCountryTxt);
+      dat_tab.columns(6).header().to$().text(selectedCountryTxt + " rank");
+      dat_tab.columns.adjust().draw();
+
+      dat_tab2.columns(3).header().to$().text(itemHeading);
+      dat_tab2.columns(4).header().to$().text(selectedCountryTxt2);
+      dat_tab2.columns(6).header().to$().text(selectedCountryTxt2 + " rank");
+      dat_tab2.columns.adjust().draw();
+
+      ref_tab.columns(2).header().to$().text(itemHeading);
+      ref_tab.columns.adjust().draw();
+
+      var dataText = selectedIndicatorTxt + ": " + selectedCountryTxt
+
+      var dataText2 = selectedIndicatorTxt + ": " + selectedCountryTxt2
+
+      var refText = selectedIndicatorTxt + ": metadata"
+
+      $("#data-title").html(dataText);
+      $("#data-title2").html(dataText2);
+      $("#ref-title").html(refText);
+
+    }
+
+
+    $(document).ready(
+      // $("#incise-graph").height($("#graph-container").height()),
+      $("#welcome-modal").modal(),
+      chk_ctry2(),
+      plot_graphs(),
+      filter_table(),
+      $(".btn-group").addClass("d-none d-lg-block"),
+      $(".btn-group button").removeClass("btn-secondary").addClass("btn-sm border-secondary btn-light"),
+      $(".dt-buttons").addClass("pt-2").prepend('<em class="btn pr-2 btn-sm border-secondary text-muted">Download table:</em>')
+    );
+
+    $("#graph-tab").on('shown.bs.tab', function() {
+      plot_graphs();
+    });
+
+    $("#about-tab").on('shown.bs.tab', function() {
+      $("#incise-controls").fadeOut();
+      $("#incise-sidebar").addClass("d-none d-xl-block")
+      $('#content-panels').removeClass("col-xs-12 col-lg-9 col-xl-10")
+    });
+
+    $("#about-tab").on('hide.bs.tab', function() {
+      $("#incise-controls").fadeIn();
+      $("#incise-sidebar").removeClass("d-none d-xl-block")
+      $('#content-panels').addClass("col-xs-12 col-lg-9 col-xl-10")
+    });
+
+    $("#data-tab").on('shown.bs.tab', function() {
+      dat_tab.columns.adjust().draw()
+      dat_tab2.columns.adjust().draw()
+    });
+
+    $("#ref-tab").on('shown.bs.tab', function() {
+      ref_tab.columns.adjust().draw()
+    });
+
+    $('#data-tab').hover(
+      function() {
+        if ($('#data-tab-link').hasClass('disabled')) {
+          $(this).popover('show')
+        }
+      },
+      function() {
+        $(this).popover('hide')
+      }
+    )
+
+    $("#incise-graph").on('plotly_click', function(_, data) {
+
+      var country = data.points[0].y
+      var c1 = selectizeCountry.getValue()
+      var c2 = selectizeCountry2.getValue()
+
+      if ((typeof country) == "undefined") {
+        return
+      }
+
+      if (country == c1 || country == c2 || country == "InCiSE") {
+        return
+      }
+
+      if($("#toggle-adv").prop('checked') == true){
+        selectizeCountry2.setValue(country)
+      } else {
+        selectizeCountry.setValue(country)
+      }
+
+      plot_graphs();
+      filter_table();
+
+    })
+
+    $("#incise-bar").on('plotly_click', function(_, data) {
+
+      var country = data.points[0].y
+      var c1 = selectizeCountry.getValue()
+      var c2 = selectizeCountry2.getValue()
+
+      if ((typeof country) == "undefined") {
+        return
+      }
+
+      if (country == c1 || country == c2 || country == "InCiSE") {
+        return
+      }
+
+      if($("#toggle-adv").prop('checked') == true){
+        selectizeCountry2.setValue(country)
+      } else {
+        selectizeCountry.setValue(country)
+      }
+
+      plot_graphs();
+      filter_table();
+
+    })
+
+    $('#toggle-help').on('change', function() {
+      if ($('#toggle-help').prop('checked') == true) {
+        $(".alert").show()
+      } else {
+        $(".alert").hide()
+      }
+    })
+
+    $('#toggle-intro').on('change', function() {
+      if ($('#toggle-intro').prop('checked') == true) {
+        $("#intro-modal").modal()
+      }
+    })
+
+    $('#toggle-adv').on('change', function() {
+      if ($('#toggle-adv').prop('checked') == true) {} else {
+        selectizeCountry2.addItem("")
+        plot_graphs(),
+          filter_table()
+      }
+    })
+
+    $('#intro-modal').on('hide.bs.modal', function() {
+      $('#toggle-intro').prop('checked', false)
+    })
+
+    $('#welcome-more-btn').click(function() {
+      $('#welcome-modal').modal('hide');
+      $("#intro-modal").modal();
+    })
+
+    $('.help > .close').click(function(data) {
+      $('.help').hide();
+      $('#toggle-help').prop('checked', false)
+    })
+
+    function purge_plots() {
+      Plotly.purge("incise-graph");
+      Plotly.purge("incise-bar");
+      Plotly.purge("incise-radar");
+    }
+
+    $(window).resize(function() {
+      purge_plots();
+      plot_graphs();
+      if ($(window).width() > 992) {
+        $("#collapse-controls").collapse('show')
+      }
+      if ($(window).width() < 992) {
+        $("#collapse-controls").collapse('hide')
+      }
+    });
+
+
+    function chk_ctry2() {
+
+      if (selectizeCountry.getValue() == "") {
+        $("#toggle-adv").prop("disabled", true)
+      } else(
+        $("#toggle-adv").prop("disabled", false)
+      )
+
+      if (selectizeCountry2.getValue() == selectizeCountry.getValue()) {
+        selectizeCountry2.addItem("")
+        plot_graphs()
+        filter_table()
+      }
+    }
+
+
+    $("#controls-button").on('click', function(){
+      $("#collapse-controls").collapse('toggle')
+    });
+
+
+  </script>
+
+</body>
+
+</html>
