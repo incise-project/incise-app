@@ -1,2 +1,2 @@
-# incise-app
-InCiSE results dashboard
+# International Civil Service Effectiveness (InCiSE) Index Dashboard
+This repository is the code used to produce the interactive results dashboard for the International Civil Service Effectiveness (InCiSE) Index project. The live version can be found on the Blavatnik School of Government's [web page about the InCiSE project](https://www.bsg.ox.ac.uk/about/partnerships/international-civil-service-effectiveness-index-2019).
